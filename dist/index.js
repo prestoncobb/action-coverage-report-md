@@ -30002,6 +30002,7 @@ const status_1 = __nccwpck_require__(5678);
 const getBasePath_1 = __nccwpck_require__(4664);
 async function getMarkdownReport({ pathToTextReport, ...restOptions }) {
     const textReport = await promises_1.default.readFile(pathToTextReport, { encoding: 'utf8' });
+    console.log(textReport);
     return getMarkdownReportFromTextReport({ textReport, ...restOptions });
 }
 function getMarkdownReportFromTextReport({ textReport, githubBaseUrl, srcBasePath }) {
@@ -30014,9 +30015,6 @@ function getMarkdownReportFromTextReport({ textReport, githubBaseUrl, srcBasePat
             coverageBasePath: normalizedBasePath,
             parsedBasePath: basePath
         });
-        console.log(`currentBasePath: ${currentBasePath}`);
-        console.log(`updatedRow: ${updatedRow}`);
-        console.log(`basePath: ${basePath}`);
         return updatedRow;
     });
     const modifiedInfoHeader = addStatusColumn(coverageInfoHeader);
@@ -30106,12 +30104,9 @@ exports.getReportParts = getReportParts;
 function getReportParts(rawCoverage) {
     const trimmedRawCoverage = rawCoverage.trim();
     const rawCoverageRows = trimmedRawCoverage.split('\n');
-    console.log(`Raw Coverage Rows: ${rawCoverageRows}`);
     const coverageRows = rawCoverageRows.slice(1, rawCoverageRows.length - 1);
-    console.log(`Coverage Rows: ${coverageRows}`);
     const coverageInfoHeader = coverageRows.slice(0, 3);
     const coverageInfoRows = coverageRows.slice(3);
-    console.log(`Coverage Info Rows: ${coverageInfoRows}`);
     return { coverageInfoHeader, coverageInfoRows };
 }
 

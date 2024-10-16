@@ -13,6 +13,7 @@ export async function getMarkdownReport({
   srcBasePath: string
 }): Promise<string> {
   const textReport = await fs.readFile(pathToTextReport, { encoding: 'utf8' })
+  console.log(textReport)
   return getMarkdownReportFromTextReport({ textReport, ...restOptions })
 }
 
@@ -26,6 +27,7 @@ export function getMarkdownReportFromTextReport({
   srcBasePath: string
 }): string {
   const { coverageInfoHeader, coverageInfoRows } = getReportParts(textReport)
+  console.log(`Info Rows: ${coverageInfoRows}`)
 
   const normalizedBasePath = path.relative('', srcBasePath)
   let currentBasePath = normalizedBasePath
@@ -39,10 +41,6 @@ export function getMarkdownReportFromTextReport({
       coverageBasePath: normalizedBasePath,
       parsedBasePath: basePath
     })
-
-    console.log(`currentBasePath: ${currentBasePath}`)
-    console.log(`updatedRow: ${updatedRow}`)
-    console.log(`basePath: ${basePath}`)
 
     return updatedRow
   })
