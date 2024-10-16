@@ -39,6 +39,11 @@ export function getMarkdownReportFromTextReport({
       coverageBasePath: normalizedBasePath,
       parsedBasePath: basePath
     })
+
+    console.log(`currentBasePath: ${currentBasePath}`)
+    console.log(`updatedRow: ${updatedRow}`)
+    console.log(`basePath: ${basePath}`)
+
     return updatedRow
   })
 
@@ -61,6 +66,7 @@ export function processRow(
     const [, leadingSpaces, fileName] = parsedNameColumn
     const mdLeadingSpaces = leadingSpaces.replaceAll(' ', '&nbsp;')
     const extension = path.extname(fileName)
+    console.log(`fileName: ${fileName}`)
 
     if (!extension) {
       basePath = fileName
@@ -68,6 +74,7 @@ export function processRow(
     } else {
       const filePath = basePath ? `${basePath}/${fileName}` : fileName
       const fullFilePath = `${githubBaseUrl}/${filePath}`
+      console.log(`fullFilePath: ${fullFilePath}`)
       columns[0] = `${mdLeadingSpaces}[${fileName}](${fullFilePath})`
       columns[5] = formatUncoveredLines(columns[5], fullFilePath)
     }

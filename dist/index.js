@@ -30014,6 +30014,9 @@ function getMarkdownReportFromTextReport({ textReport, githubBaseUrl, srcBasePat
             coverageBasePath: normalizedBasePath,
             parsedBasePath: basePath
         });
+        console.log(`currentBasePath: ${currentBasePath}`);
+        console.log(`updatedRow: ${updatedRow}`);
+        console.log(`basePath: ${basePath}`);
         return updatedRow;
     });
     const modifiedInfoHeader = addStatusColumn(coverageInfoHeader);
@@ -30027,6 +30030,7 @@ function processRow(row, basePath, githubBaseUrl) {
         const [, leadingSpaces, fileName] = parsedNameColumn;
         const mdLeadingSpaces = leadingSpaces.replaceAll(' ', '&nbsp;');
         const extension = path_1.default.extname(fileName);
+        console.log(`fileName: ${fileName}`);
         if (!extension) {
             basePath = fileName;
             columns[0] = mdLeadingSpaces + fileName;
@@ -30034,6 +30038,7 @@ function processRow(row, basePath, githubBaseUrl) {
         else {
             const filePath = basePath ? `${basePath}/${fileName}` : fileName;
             const fullFilePath = `${githubBaseUrl}/${filePath}`;
+            console.log(`fullFilePath: ${fullFilePath}`);
             columns[0] = `${mdLeadingSpaces}[${fileName}](${fullFilePath})`;
             columns[5] = formatUncoveredLines(columns[5], fullFilePath);
         }
@@ -30101,9 +30106,12 @@ exports.getReportParts = getReportParts;
 function getReportParts(rawCoverage) {
     const trimmedRawCoverage = rawCoverage.trim();
     const rawCoverageRows = trimmedRawCoverage.split('\n');
+    console.log(`Raw Coverage Rows: ${rawCoverageRows}`);
     const coverageRows = rawCoverageRows.slice(1, rawCoverageRows.length - 1);
+    console.log(`Coverage Rows: ${coverageRows}`);
     const coverageInfoHeader = coverageRows.slice(0, 3);
     const coverageInfoRows = coverageRows.slice(3);
+    console.log(`Coverage Info Rows: ${coverageInfoRows}`);
     return { coverageInfoHeader, coverageInfoRows };
 }
 
