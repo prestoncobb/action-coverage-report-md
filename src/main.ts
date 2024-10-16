@@ -28,6 +28,8 @@ export async function run(): Promise<void> {
       githubBaseUrl,
       srcBasePath
     })
+    console.log(mdReport)
+    core.debug(mdReport)
     core.setOutput('markdownReport', mdReport)
   } catch (error) {
     if (error instanceof Error) {
